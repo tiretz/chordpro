@@ -7,8 +7,8 @@ from spotipy import Spotify
 
 from app.core.exceptions import BadRequestException
 from app.schemas.track import TrackSchema, TrackSearchSchema
-from app.services.track.lyrics import adapt_lyrics_to_chordpro
 from app.utils.duration import get_duration_in_minutes_and_seconds
+from app.utils.lyrics import adapt_lyrics_to_chordpro
 
 
 def get_track(genius: Genius, spotify: Spotify, id: str) -> TrackSchema:
