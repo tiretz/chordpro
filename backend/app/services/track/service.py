@@ -11,6 +11,29 @@ from app.utils.duration import get_duration_in_minutes_and_seconds
 from app.utils.lyrics import adapt_lyrics_to_chordpro
 
 
+def get_track_chordpro_template(title: str | None = None, artists: list[str] | None = None, album_name: str | None = None, time_signature: str | None = None, duration: str | None = None, lyrics: str | None = None) -> str:
+
+    return "\n".join(
+        filter(
+            None,
+            (
+                f"{{title: {title or ""}}}",
+                f"{{artist: {", ".join(artists) if artists else ""}}}",
+                f"{{album: {album_name or ""}}}",
+                f"{{key: }}",
+                f"{{tempo: }}",
+                f"{{time: {time_signature or "4/4"}}}",
+                f"{{duration: {duration or "0:00"}}}",
+                f"{{midi: PC0.0:0}}",
+                f"{{keywords: English}}",
+                "",
+                "",
+                adapt_lyrics_to_chordpro(lyrics) if lyrics else None,
+            ),
+        )
+    )
+
+
 def get_track(genius: Genius, spotify: Spotify, id: str) -> TrackSchema:
     """Get track data by track ID"""
 
@@ -25,22 +48,7 @@ def get_track(genius: Genius, spotify: Spotify, id: str) -> TrackSchema:
     time_signature: str = "4/4"
     title: str = track_result["name"]
 
-    chordpro_body: str = "\n".join(
-        (
-            f"{{title: {title}}}",
-            f"{{artist: {", ".join(artists)}}}",
-            f"{{album: {album_name}}}",
-            f"{{key: }}",
-            f"{{tempo: }}",
-            f"{{time: {time_signature}}}",
-            f"{{duration: {duration}}}",
-            f"{{midi: PC0.0:0}}",
-            f"{{keywords: English}}",
-            "",
-            "",
-            adapt_lyrics_to_chordpro(lyrics),
-        )
-    )
+    chordpro_body: str = get_track_chordpro_template(title, artists, album_name, time_signature, duration, lyrics)
 
     return TrackSchema(
         album_cover_url=track_result["album"]["images"][0]["url"],
