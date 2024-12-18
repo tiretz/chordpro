@@ -1,0 +1,15 @@
+mat-grid-list {
+  margin: 20px 10px;
+}
+
+button {
+  width: 100%;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.mdc-button--unelevated {
+  padding: 0 8px 0 8px;
+  text-overflow: ellipsis;
+}

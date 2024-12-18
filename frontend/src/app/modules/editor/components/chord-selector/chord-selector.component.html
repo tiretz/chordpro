@@ -1,0 +1,9 @@
+<mat-grid-list *ngIf="chords.length > 0" cols="2" rowHeight="37px" gutterSize="5px">
+  <mat-grid-tile *ngFor="let chord of chords; index as i">
+    <button mat-flat-button (click)="insertChord(chord)">
+      <mat-label>[{{ chord }}]</mat-label>
+      <small *ngIf="i < 9">Ctrl+{{ i + 1 }}</small>
+    </button>
+  </mat-grid-tile>
+</mat-grid-list>
+<mat-divider *ngIf="chords.length > 0"></mat-divider>

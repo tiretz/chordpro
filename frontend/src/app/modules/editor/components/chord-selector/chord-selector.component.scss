@@ -1,0 +1,33 @@
+mat-grid-list {
+  margin: 20px 10px;
+}
+
+button {
+  width: 100%;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.mdc-button--unelevated {
+  padding: 0 8px 0 8px;
+  text-overflow: ellipsis;
+}
+
+mat-label {
+  display: block;
+}
+
+small {
+  display: block;
+  color: whitesmoke;
+  font-size: 0.5rem;
+  position: absolute;
+  bottom: 0.25rem;
+  right: -0.3rem;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}

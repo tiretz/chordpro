@@ -1,0 +1,10 @@
+<mat-sidenav-container [hasBackdrop]="false">
+  <mat-sidenav id="sidenav" class="border-end rounded-0" opened mode="side" disableClose="true">
+    <app-chord-selector></app-chord-selector>
+    <app-inline-selector></app-inline-selector>
+    <app-section-selector></app-section-selector>
+  </mat-sidenav>
+  <mat-sidenav-content id="editor-container" (window:resize)="onEditorContainerResize()" onresize="onEditorContainerResize()">
+    <app-monaco-editor></app-monaco-editor>
+  </mat-sidenav-content>
+</mat-sidenav-container>

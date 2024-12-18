@@ -1,0 +1,14 @@
+:host {
+  --mdc-list-list-item-two-line-container-height: 72px;
+}
+
+mat-hint {
+  overflow: hidden;
+  width: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+mat-selection-list {
+  max-height: 500px;
+  overflow: auto;
+}

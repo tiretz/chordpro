@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+#sidenav {
+  display: flex;
+  width: 250px;
+  text-align: center;
+}
+
+.mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.mat-divider {
+  width: 100%;
+  border-top-width: 3px;
+}
+
+app-chord-selector,
+app-inlines-selector,
+app-section-selector {
+  width: 100%;
+}

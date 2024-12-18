@@ -1,0 +1,6 @@
+<mat-grid-list cols="2" rowHeight="37px" gutterSize="5px" *ngIf="inlines.length > 0">
+  <mat-grid-tile *ngFor="let inline of inlines">
+    <button mat-flat-button (click)="insertInline(inline)">{{ inline }}</button>
+  </mat-grid-tile>
+</mat-grid-list>
+<mat-divider *ngIf="inlines.length > 0"></mat-divider>

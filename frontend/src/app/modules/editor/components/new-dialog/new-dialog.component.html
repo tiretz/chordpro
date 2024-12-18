@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Insert new track template</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="formGroup">
+  <mat-dialog-content class="mat-typography overflow-hidden">
+    <div class="container-fluid px-0">
+      <div class="row g-3 mt-0">
+        <div class="col-8">
+          <mat-form-field class="w-100">
+            <mat-label>Track title</mat-label>
+            <input matInput formControlName="title" cdkFocusInitial placeholder="Title of the track" (keydown.enter)="searchTracks()" />
+            <mat-hint align="start">Optional if song artist(s) is/were given</mat-hint>
+            @if (formGroup.get('title')?.value) {
+            <button matSuffix mat-icon-button type="button" aria-label="Clear" (click)="formGroup.get('title')?.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+            }
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field class="w-100">
+            <mat-label>Track artist(s)</mat-label>
+            <input matInput formControlName="artists" placeholder="Artist(s) of the track" (keydown.enter)="searchTracks()" />
+            <mat-hint align="start">Optional if song title is given</mat-hint>
+            @if (formGroup.get('artists')?.value) {
+            <button matSuffix mat-icon-button type="button" aria-label="Clear" (click)="formGroup.get('artists')?.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row g-3 mt-0">
+        <div class="col text-center">
+          <button mat-flat-button [disabled]="formGroup.invalid" (click)="searchTracks()">
+            <mat-icon>search</mat-icon>
+            <span>Search</span>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="searchResults.length > 0" class="row g-3 mt-0">
+        <div class="col">
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div class="row g-3 mt-0">
+        <div class="col">
+          <mat-selection-list *ngIf="searchResults.length > 0" #searchResultList class="w-100" role="list" [multiple]="false" [hideSingleSelectionIndicator]="true" (selectionChange)="onSongSelected($event, searchResultList.selectedOptions.selected)">
+            <mat-list-option *ngFor="let searchResult of searchResults" role="listitem" [value]="searchResult" style="margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.04)">
+              <img matListItemAvatar [src]="searchResult.albumCoverUrl" alt="" style="border-radius: 0px; margin-top: 0px; margin-left: 0px; width: 80px; height: 80px" />
+              <div matListItemTitle>{{ searchResult.title }}</div>
+              <div matListItemLine class="text-white-50">{{ searchResult.artists.join(", ") }}</div>
+              <div matListItemLine class="text-white-50 fw-lighter">{{ searchResult.albumName }}</div>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+    <button mat-flat-button [disabled]="!selectedSearchTrack" (click)="onInsertTrackTemplateButtonClick()">Insert</button>
+  </mat-dialog-actions>
+</form>
