@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Path, Query
 
 from app.core.dependencies import GeniusDep, SpotifyDep
-from app.schemas.track import TrackSchema, TrackSearchSchema
+from app.schemas.track import TrackSchema, SearchTrackSchema
 from app.services.track import service
 
 router = APIRouter(prefix="/track", tags=["track"])
@@ -16,7 +16,7 @@ def get_track_chordpro_template() -> str:
 
 
 @router.get("/search")
-def search_tracks(*, spotify: SpotifyDep, title: Annotated[str | None, Query()] = None, artists: Annotated[list[str] | None, Query()] = None) -> list[TrackSearchSchema]:
+def search_tracks(*, spotify: SpotifyDep, title: Annotated[str | None, Query()] = None, artists: Annotated[list[str] | None, Query()] = None) -> list[SearchTrackSchema]:
     """Search for tracks by title and / or artist(s)."""
 
     return service.search_tracks(spotify, title, artists)

@@ -5,7 +5,7 @@ from pydantic import Field
 from app.schemas.base import BaseSchema
 
 
-class TrackSearchSchema(BaseSchema):
+class SearchTrackSchema(BaseSchema):
 
     album_cover_url: str = Field(description="Track album cover URL")
     album_name: str = Field(description="Track album name")
@@ -16,7 +16,7 @@ class TrackSearchSchema(BaseSchema):
     title: str = Field(description="Track title")
 
 
-class TrackSchema(TrackSearchSchema):
+class TrackSchema(SearchTrackSchema):
 
     chords: list[str] = Field(description="Track chords")
     chordpro_body: str = Field(description="Track body with chrodpro meta data")
