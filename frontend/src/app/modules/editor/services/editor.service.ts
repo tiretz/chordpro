@@ -1,17 +1,55 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+import { IChords } from '../../../core/models/chords.interface';
+import { ApiService } from '../../../core/services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditorService {
-  public chords = new BehaviorSubject<string[]>([]);
-  public chords$ = this.chords.asObservable();
+  public chords: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  public chords$: Observable<string[]> = this.chords.asObservable();
+  private currentKeyAndChords: [string | undefined, string[] | undefined] = [undefined, undefined];
   public monacoEditor: any | undefined;
 
-  constructor() {
+  constructor(private readonly apiService: ApiService) {
     this.onValueChange = this.onValueChange.bind(this);
+  }
+
+  private checkKeyChange(content: string): void {
+    const regexMatches: IterableIterator<RegExpMatchArray> = content.matchAll(/{key: ?([A-G][b|#]?m?)}/g);
+    const matches: RegExpMatchArray[] = [...regexMatches];
+
+    if (matches.length === 0) {
+      return;
+    }
+
+    for (const match of matches) {
+      const newKey = match[1];
+
+      if (newKey == this.currentKeyAndChords[0]) {
+        break;
+      }
+
+      this.apiService.getChords(newKey).subscribe({
+        next: (chords: IChords) => {
+          this.currentKeyAndChords[0] = chords.key;
+          this.currentKeyAndChords[1] = chords.chords;
+
+          const content = this.monacoEditor.getValue();
+
+          if (!content) {
+            return;
+          }
+
+          this.updateChordSelector(content);
+        },
+      });
+
+      break;
+    }
   }
 
   public init(editor: any) {
@@ -462,10 +500,8 @@ export class EditorService {
       return;
     }
 
-    // await this.checkKeyChange(content);
+    this.checkKeyChange(content);
     this.updateChordSelector(content);
-
-    // this.updateSongInfo(content);
   }
 
   private updateChordSelector(content: string): void {
@@ -473,6 +509,7 @@ export class EditorService {
     const matches: RegExpMatchArray[] = [...regexMatches];
 
     if (matches.length === 0) {
+      this.chords.next(this.currentKeyAndChords[1] ?? []);
       return;
     }
 
@@ -495,7 +532,7 @@ export class EditorService {
 
     const finalChords: string[] = chordsSortedByOccurrence;
 
-    const keyChords: string[] | undefined = []; //this.documentService.songInfo?.chords;
+    const keyChords: string[] | undefined = this.currentKeyAndChords[1];
 
     if (keyChords) {
       for (const chord of keyChords) {
