@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { firstValueFrom } from 'rxjs';
@@ -18,18 +19,14 @@ import { EditorService } from '../../../editor/services/editor.service';
 
 @Component({
   selector: 'app-header',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule],
+  imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   constructor(private readonly dialog: MatDialog, private readonly editorService: EditorService, private readonly apiService: ApiService, private readonly loadingOverlayService: LoadingOverlayService) {}
 
-  protected async onDownloadButtonClick(): Promise<void> {
-    await this.saveToFile(this.editorService.monacoEditor.getValue(), this.editorService.getDownloadFilename());
-  }
-
-  protected async onNewButtonClick(): Promise<void> {
+  private async cancelOverrideEditorValue(): Promise<boolean> {
     if (this.editorService.monacoEditor.getValue()) {
       const dialogRef = this.dialog.open(OverrideDialogComponent, {
         width: '400px',
@@ -41,8 +38,38 @@ export class HeaderComponent {
       const overrideResult = await firstValueFrom(dialogRef.afterClosed());
 
       if (!overrideResult) {
-        return;
+        return true;
       }
+    }
+
+    return false;
+  }
+
+  protected async onDownloadTrackButtonClick(): Promise<void> {
+    await this.saveToFile(this.editorService.monacoEditor.getValue(), this.editorService.getDownloadFilename());
+  }
+
+  protected async onInsertEmptyTrackTemplateButtonClick(): Promise<void> {
+    if (await this.cancelOverrideEditorValue()) {
+      return;
+    }
+
+    this.editorService.monacoEditor.setValue('');
+
+    this.loadingOverlayService.show('Getting empty track template ...');
+
+    this.apiService.getTrackTemplate().subscribe({
+      next: (emptyTrackTemplate: string) => {
+        this.editorService.monacoEditor.setValue(emptyTrackTemplate);
+
+        this.loadingOverlayService.hide();
+      },
+    });
+  }
+
+  protected async onNewTrackButtonClick(): Promise<void> {
+    if (await this.cancelOverrideEditorValue()) {
+      return;
     }
 
     this.editorService.monacoEditor.setValue('');
@@ -54,7 +81,11 @@ export class HeaderComponent {
       width: '65%',
     });
 
-    dialogRef.afterClosed().subscribe((trackId: string) => {
+    dialogRef.afterClosed().subscribe((trackId: string | undefined) => {
+      if (!trackId) {
+        return;
+      }
+
       this.loadingOverlayService.show('Getting track template ...');
 
       this.apiService.getTrack(trackId).subscribe({
