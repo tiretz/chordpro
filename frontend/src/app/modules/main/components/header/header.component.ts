@@ -58,7 +58,7 @@ export class HeaderComponent {
     });
   }
 
-  private async saveToFile(blob: any, filename: string): Promise<void> {
+  private async saveToFile(data: any, filename: string): Promise<void> {
     const supportsFileSystemAccess =
       'showSaveFilePicker' in window &&
       (() => {
@@ -77,7 +77,7 @@ export class HeaderComponent {
 
         const writable = await handle.createWritable();
 
-        await writable.write(blob);
+        await writable.write(data);
         await writable.close();
 
         return;
@@ -90,6 +90,8 @@ export class HeaderComponent {
         return;
       }
     }
+
+    const blob = new Blob([data], { type: 'text/plain' });
 
     const blobURL = URL.createObjectURL(blob);
 
