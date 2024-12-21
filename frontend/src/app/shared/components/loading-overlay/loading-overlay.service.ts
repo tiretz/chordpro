@@ -12,6 +12,15 @@ export class LoadingOverlayService {
 
   constructor(private readonly dialog: MatDialog) {}
 
+  hide(): void {
+    if (!this.overlayRef) {
+      return;
+    }
+
+    this.overlayRef.componentInstance.message = '';
+    this.overlayRef.close();
+  }
+
   show(message?: string): void {
     this.overlayRef = this.dialog.open(LoadingOverlayComponent, {
       disableClose: true,
@@ -34,14 +43,5 @@ export class LoadingOverlayService {
     }
 
     this.overlayRef.componentInstance.message = message;
-  }
-
-  hide(): void {
-    if (!this.overlayRef) {
-      return;
-    }
-
-    this.overlayRef.componentInstance.message = '';
-    this.overlayRef.close();
   }
 }

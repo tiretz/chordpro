@@ -7,6 +7,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { firstValueFrom } from 'rxjs';
 
+import { ITrack } from '../../../../core/models/track.interface';
+import { ApiService } from '../../../../core/services/api.service';
+
+import { LoadingOverlayService } from '../../../../shared/components/loading-overlay/loading-overlay.service';
+
 import { NewDialogComponent } from '../../../editor/components/new-dialog/new-dialog.component';
 import { OverrideDialogComponent, OverrideDialogModel } from '../../../editor/components/override-dialog/override-dialog.component';
 import { EditorService } from '../../../editor/services/editor.service';
@@ -18,7 +23,7 @@ import { EditorService } from '../../../editor/services/editor.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(private readonly dialog: MatDialog, private readonly editorService: EditorService) {}
+  constructor(private readonly dialog: MatDialog, private readonly editorService: EditorService, private readonly apiService: ApiService, private readonly loadingOverlayService: LoadingOverlayService) {}
 
   protected async onDownloadButtonClick(): Promise<void> {
     await this.saveToFile(this.editorService.monacoEditor.getValue(), this.editorService.getDownloadFilename());
@@ -49,12 +54,18 @@ export class HeaderComponent {
       width: '65%',
     });
 
-    dialogRef.afterClosed().subscribe(async (result) => {
-      // const automaticResult = result as IAutomaticDialogResult;
-      // if (!automaticResult) {
-      //   return;
-      // }
-      // this.editorService.initNewAutomaticSong(automaticResult);
+    dialogRef.afterClosed().subscribe((trackId: string) => {
+      this.loadingOverlayService.show('Getting track template ...');
+
+      this.apiService.getTrack(trackId).subscribe({
+        next: (track: ITrack) => {
+          const trackTemplate: string = track.chordproBody;
+
+          this.editorService.monacoEditor.setValue(trackTemplate);
+
+          this.loadingOverlayService.hide();
+        },
+      });
     });
   }
 

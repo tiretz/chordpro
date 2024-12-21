@@ -11,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule, MatListOption, MatSelectionListChange } from '@angular/material/list';
 
 import { ISearchTrack } from '../../../../core/models/search-track.interface';
-import { ITrack } from '../../../../core/models/track.interface';
 import { ApiService } from '../../../../core/services/api.service';
 
 import { requireTitleOrArtists } from '../../../../shared/validators/require-title-or-artists.validator';
@@ -41,26 +40,20 @@ export class NewDialogComponent {
     );
   }
 
-  protected onSongSelected(event: MatSelectionListChange, selectedSongs: MatListOption[]) {
-    if (selectedSongs.length > 0) {
-      this.selectedSearchTrack = selectedSongs[0].value;
-    }
-  }
-
   protected async onInsertTrackTemplateButtonClick(): Promise<void> {
     if (!this.selectedSearchTrack) {
       return;
     }
 
-    this.apiService.getTrack(this.selectedSearchTrack.id).subscribe({
-      next: (track: ITrack) => {
-        const trackTemplate: string = track.chordproBody;
+    this.dialogRef.close(this.selectedSearchTrack.id);
+  }
 
-        this.editorService.monacoEditor.setValue(trackTemplate);
+  protected onSongSelected(event: MatSelectionListChange, selectedSongs: MatListOption[]) {
+    if (selectedSongs.length <= 0) {
+      return;
+    }
 
-        this.dialogRef.close();
-      },
-    });
+    this.selectedSearchTrack = selectedSongs[0].value;
   }
 
   protected async searchTracks(): Promise<void> {
