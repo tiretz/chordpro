@@ -1,4 +1,3 @@
-from datetime import datetime
 from dateutil.parser import parse
 from typing import cast
 
@@ -69,7 +68,7 @@ def get_track(genius: Genius, spotify: Spotify, id: str) -> TrackSchema:
     return TrackSchema(
         album_cover_url=track_result["album"]["images"][0]["url"],
         album_name=album_name,
-        album_release_date=datetime.strptime(track_result["album"]["release_date"], "%Y-%m-%d").date(),
+        album_release_date=parse(track_result["album"]["release_date"]).date(),
         artists=artists,
         chords=[],
         chordpro_body=chordpro_body,
