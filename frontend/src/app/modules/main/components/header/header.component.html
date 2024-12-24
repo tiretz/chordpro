@@ -2,7 +2,7 @@
   <img id="logo" src="img/logo_64x64.png" alt="Logo" height="36" />
   <span class="ms-3">ChordPro - Editor</span>
   <span class="horizontal-spacer"></span>
-  <button mat-flat-button class="split-button" (click)="onNewTrackButtonClick()">
+  <button mat-flat-button class="split-button" matTooltip="Insert prefilled chordpro track template." (click)="onNewTrackButtonClick()">
     <mat-icon>lyrics</mat-icon>
     <span>New track</span>
   </button>
@@ -10,12 +10,12 @@
     <mat-icon class="m-0">arrow_drop_down</mat-icon>
   </button>
   <mat-menu #dropdownMenu="matMenu" xPosition="before">
-    <button mat-menu-item (click)="onInsertEmptyTrackTemplateButtonClick()">
+    <button mat-menu-item matTooltip="Insert empty chordpro track template." (click)="onInsertEmptyTrackTemplateButtonClick()">
       <mat-icon>text_snippet</mat-icon>
-      <span>Insert empty chordpro track template</span>
+      <span>Empty track template</span>
     </button>
   </mat-menu>
-  <button mat-flat-button (click)="onDownloadTrackButtonClick()">
+  <button mat-flat-button matTooltip="Download current track." (click)="onDownloadTrackButtonClick()">
     <mat-icon>download</mat-icon>
     <span>Download</span>
   </button>

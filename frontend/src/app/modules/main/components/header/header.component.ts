@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { firstValueFrom } from 'rxjs';
 
@@ -19,7 +20,7 @@ import { EditorService } from '../../../editor/services/editor.service';
 
 @Component({
   selector: 'app-header',
-  imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule, MatTooltipModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
