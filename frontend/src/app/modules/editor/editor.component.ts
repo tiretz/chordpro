@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
+import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { BpmCounterComponent } from './components/bpm-counter/bpm-counter.component';
@@ -11,7 +12,7 @@ import { SectionSelectorComponent } from './components/section-selector/section-
 
 @Component({
   selector: 'app-editor',
-  imports: [CommonModule, MatSidenavModule, MonacoEditorComponent, ChordSelectorComponent, InlineSelectorComponent, SectionSelectorComponent, BpmCounterComponent],
+  imports: [CommonModule, MatSidenavModule, MatDividerModule, MonacoEditorComponent, ChordSelectorComponent, InlineSelectorComponent, SectionSelectorComponent, BpmCounterComponent],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss',
 })

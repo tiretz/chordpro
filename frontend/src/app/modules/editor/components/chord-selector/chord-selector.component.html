@@ -1,4 +1,6 @@
-<mat-grid-list *ngIf="chords.length > 0" cols="2" rowHeight="37px" gutterSize="5px">
+<small class="d-block text-white-50">Chords</small>
+@if (chords.length > 0) {
+<mat-grid-list class="mt-2" cols="2" rowHeight="37px" gutterSize="5px">
   <mat-grid-tile *ngFor="let chord of chords; index as i">
     <button mat-flat-button (click)="insertChord(chord)">
       <mat-label>[{{ chord }}]</mat-label>
@@ -6,4 +8,6 @@
     </button>
   </mat-grid-tile>
 </mat-grid-list>
-<mat-divider *ngIf="chords.length > 0"></mat-divider>
+} @else {
+<small class="d-block text-white-50 mt-2">No chords recognized ...</small>
+}

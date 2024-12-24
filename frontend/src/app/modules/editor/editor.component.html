@@ -1,8 +1,11 @@
 <mat-sidenav-container [hasBackdrop]="false">
   <mat-sidenav id="sidenav" class="border-end rounded-0" opened mode="side" disableClose="true">
     <app-chord-selector></app-chord-selector>
+    <mat-divider></mat-divider>
     <app-inline-selector></app-inline-selector>
+    <mat-divider></mat-divider>
     <app-section-selector></app-section-selector>
+    <mat-divider></mat-divider>
     <app-bpm-counter></app-bpm-counter>
   </mat-sidenav>
   <mat-sidenav-content id="editor-container" (window:resize)="onEditorContainerResize()" onresize="onEditorContainerResize()">

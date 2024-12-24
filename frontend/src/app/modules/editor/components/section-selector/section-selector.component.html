@@ -1,6 +1,6 @@
-<mat-grid-list cols="2" rowHeight="37px" gutterSize="5px" *ngIf="sections.length > 0">
+<small class="d-block text-white-50">Sections</small>
+<mat-grid-list class="mt-2" cols="2" rowHeight="37px" gutterSize="5px">
   <mat-grid-tile *ngFor="let section of sections">
     <button mat-flat-button (click)="insertSection(section)">{{ section }}</button>
   </mat-grid-tile>
 </mat-grid-list>
-<mat-divider *ngIf="sections.length > 0"></mat-divider>
