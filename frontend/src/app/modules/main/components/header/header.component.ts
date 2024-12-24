@@ -16,6 +16,7 @@ import { LoadingOverlayService } from '../../../../shared/components/loading-ove
 
 import { NewDialogComponent } from '../../../editor/components/new-dialog/new-dialog.component';
 import { OverrideDialogComponent, OverrideDialogModel } from '../../../editor/components/override-dialog/override-dialog.component';
+import { BpmService } from '../../../editor/services/bpm.service';
 import { EditorService } from '../../../editor/services/editor.service';
 
 @Component({
@@ -25,7 +26,7 @@ import { EditorService } from '../../../editor/services/editor.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(private readonly dialog: MatDialog, private readonly editorService: EditorService, private readonly apiService: ApiService, private readonly loadingOverlayService: LoadingOverlayService) {}
+  constructor(private readonly dialog: MatDialog, private readonly editorService: EditorService, private readonly bpmService: BpmService, private readonly apiService: ApiService, private readonly loadingOverlayService: LoadingOverlayService) {}
 
   private async cancelOverrideEditorValue(): Promise<boolean> {
     if (this.editorService.monacoEditor.getValue()) {
@@ -56,6 +57,7 @@ export class HeaderComponent {
     }
 
     this.editorService.monacoEditor.setValue('');
+    this.bpmService.reset();
 
     this.loadingOverlayService.show('Getting empty track template ...');
 
@@ -74,6 +76,7 @@ export class HeaderComponent {
     }
 
     this.editorService.monacoEditor.setValue('');
+    this.bpmService.reset();
 
     const dialogRef = this.dialog.open(NewDialogComponent, {
       enterAnimationDuration: '500ms',
