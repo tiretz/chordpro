@@ -1,0 +1,15 @@
+<small class="d-block text-white-50">Tab to set track tempo.</small>
+<div class="d-flex justify-content-center mt-2">
+  <div class="d-flex align-items-center">
+    <span class="bpm">{{ bpmServerice.bpm$ | async | number : "1.0-0" }}</span>
+  </div>
+  <div>
+    <button mat-flat-button class="split-button" matTooltip="Tab to determine bpm of track." (click)="onTab()">
+      <mat-icon>lyrics</mat-icon>
+      <span>Tab</span>
+    </button>
+    <button mat-flat-button class="split-button-small" matTooltip="Reset bpm counter." (click)="onReset()">
+      <mat-icon class="m-0">restart_alt</mat-icon>
+    </button>
+  </div>
+</div>

@@ -3,10 +3,10 @@
 @use "@angular/material" as mat;
 
 html {
+  color-scheme: light dark;
   @include mat.theme(
     (
       color: (
-        theme-type: dark,
         primary: mat.$rose-palette,
         tertiary: mat.$cyan-palette,
       ),
