@@ -3,7 +3,7 @@
 @use "@angular/material" as mat;
 
 html {
-  color-scheme: light dark;
+  color-scheme: dark;
   @include mat.theme(
     (
       color: (
@@ -19,6 +19,12 @@ html {
 html,
 body {
   height: 100%;
+  --mat-sys-on-primary: #fff;
+  --mat-sys-primary: #c2185b;
+  --mat-sys-on-surface: #fff;
+  --mat-sys-on-surface-variant: #fff;
+  --mat-sys-surface: #424242;
+  --mat-sys-outline: #fff;
   --mat-dialog-container-max-width: 100%;
 }
 
