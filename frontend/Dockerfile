@@ -17,6 +17,8 @@ COPY nginx.conf /etc/nginx/conf.d
 
 COPY --from=build /app/dist/chordpro/browser /usr/share/nginx/html
 
+RUN find /usr/share/nginx/html/styles -type f -exec chmod 644 {} \;
+
 # Expose port 80
 EXPOSE 80
 
