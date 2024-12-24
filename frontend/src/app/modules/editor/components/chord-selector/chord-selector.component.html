@@ -3,8 +3,11 @@
 <mat-grid-list class="mt-2" cols="2" rowHeight="37px" gutterSize="5px">
   <mat-grid-tile *ngFor="let chord of chords; index as i">
     <button mat-flat-button (click)="insertChord(chord)">
-      <mat-label>[{{ chord }}]</mat-label>
-      <small *ngIf="i < 9">Ctrl+{{ i + 1 }}</small>
+      <div class="d-flex justify-content-between align-items-center">
+        <small #index>{{ i + 1 }}</small>
+        <mat-label>[{{ chord }}]</mat-label>
+        <small [style.visibility]="i < 9 ? 'visible' : 'hidden'" [style.width]="index.style.width" class="rotate small">Ctrl+{{ i + 1 }}</small>
+      </div>
     </button>
   </mat-grid-tile>
 </mat-grid-list>

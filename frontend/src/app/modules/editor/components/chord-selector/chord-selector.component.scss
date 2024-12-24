@@ -19,16 +19,13 @@ mat-label {
   display: block;
 }
 
-button small {
-  display: block;
+.small {
   color: whitesmoke;
   font-size: 0.5rem;
-  position: absolute;
-  bottom: 0.25rem;
-  right: -0.3rem;
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  transform: rotate(-90deg);
+  min-width: 12px;
+}
+
+.rotate {
+  text-orientation: mixed;
+  writing-mode: vertical-rl;
 }
