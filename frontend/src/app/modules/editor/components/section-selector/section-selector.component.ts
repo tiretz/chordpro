@@ -8,20 +8,21 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { EditorService } from '../../services/editor.service';
 
 export enum SectionType {
-  Intro = 'Intro',
+  Bridge = 'Bridge',
   Chorus = 'Chorus',
+  Comment = 'Comment',
+  Instrumental = 'Instrumental',
+  Intro = 'Intro',
+  Outro = 'Outro',
+  Post_Chorus = 'Post-Chorus',
+  Pre_Chorus = 'Pre-Chorus',
+  Solo = 'Solo',
+  Tab = 'Tab',
   Verse_1 = 'Verse 1',
   Verse_2 = 'Verse 2',
   Verse_3 = 'Verse 3',
   Verse_4 = 'Verse 4',
   Verse_5 = 'Verse 5',
-  Bridge = 'Bridge',
-  Instrumental = 'Instrumental',
-  Solo = 'Solo',
-  Outro = 'Outro',
-  Comment = 'Comment',
-  Pre_Chorus = 'Pre-Chorus',
-  Post_Chorus = 'Post-Chorus',
 }
 
 @Component({
@@ -46,6 +47,7 @@ export class SectionSelectorComponent {
     SectionType.Solo,
     SectionType.Outro,
     SectionType.Comment,
+    SectionType.Tab,
   ];
 
   constructor(private readonly editorService: EditorService) {}
@@ -110,6 +112,10 @@ export class SectionSelectorComponent {
 
       case SectionType.Comment:
         snippet = 'comment';
+        break;
+
+      case SectionType.Tab:
+        snippet = 'tab';
         break;
 
       default:

@@ -397,6 +397,14 @@ export class EditorService {
             documentation: 'End of tab.',
             range: range,
           },
+          {
+            label: 'tab_template',
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertText: ['e|----|', 'B|----|', 'G|----|', 'D|----|', 'A|----|', 'E|----|'].join('\n'),
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            documentation: 'Insert tab template.',
+            range: range,
+          },
 
           // Custom sections
           {
