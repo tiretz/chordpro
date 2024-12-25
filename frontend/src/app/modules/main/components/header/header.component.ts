@@ -56,8 +56,7 @@ export class HeaderComponent {
       return;
     }
 
-    this.editorService.monacoEditor.setValue('');
-    this.bpmService.reset();
+    this.editorService.reset();
 
     this.loadingOverlayService.show('Getting empty track template ...');
 
@@ -75,8 +74,7 @@ export class HeaderComponent {
       return;
     }
 
-    this.editorService.monacoEditor.setValue('');
-    this.bpmService.reset();
+    this.editorService.reset();
 
     const dialogRef = this.dialog.open(NewDialogComponent, {
       enterAnimationDuration: '500ms',

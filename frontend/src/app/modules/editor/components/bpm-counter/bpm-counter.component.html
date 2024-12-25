@@ -1,6 +1,6 @@
 <small class="d-block text-white-50">Track tempo</small>
 <div class="d-flex justify-content-center mt-2">
-  <span>{{ bpmServerice.bpm$ | async | number : "1.0-0" }}</span>
+  <span>{{ bpmService.bpm$ | async | number : "1.0-0" }}</span>
 </div>
 <div class="d-flex justify-content-center mt-2">
   <button mat-flat-button class="split-button-start" matTooltip="Apply tabbed bpm." (click)="onApplyBpm()">

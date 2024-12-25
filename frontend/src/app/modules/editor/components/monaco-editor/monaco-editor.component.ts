@@ -31,9 +31,10 @@ export class MonacoEditorComponent {
     event.preventDefault();
 
     if (event.dataTransfer && event.dataTransfer.files.length > 0 && event.dataTransfer.files[0].name.toLowerCase().endsWith('.chopro')) {
+      this.editorService.reset();
+
       const file = event.dataTransfer.files[0];
       this.editorService.monacoEditor.setValue(await file.text());
-      this.bpmService.reset();
     }
   }
 

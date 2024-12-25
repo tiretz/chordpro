@@ -526,6 +526,12 @@ export class EditorService {
     this.updateChordSelector(content);
   }
 
+  public reset(): void {
+    this.monacoEditor.setValue('');
+    this.bpmService.reset();
+    this.chords.next([]);
+  }
+
   private updateChordSelector(content: string): void {
     const regexMatches: IterableIterator<RegExpMatchArray> = content.matchAll(/\[(([A-G](#|b)?(\d)?)(\(?(M|maj|major|m|min|minor|dim|sus|dom|aug)?(\+|-|add)?\d*\)?)(\/([A-G](#|b)?))?)\]/g);
     const matches: RegExpMatchArray[] = [...regexMatches];
