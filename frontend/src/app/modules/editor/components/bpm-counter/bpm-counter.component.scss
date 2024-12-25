@@ -3,21 +3,27 @@
   margin: 20px 10px;
 }
 
-.split-button {
+.split-button-start {
+  border-right: 1px solid var(--mat-sys-on-primary);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  min-width: 0px;
+  padding-left: 12px;
   padding-right: 12px;
 }
 
-.split-button-small {
+.split-button-middle {
+  border-radius: 0px;
+  padding-left: 12px;
+  padding-right: 12px;
+  flex-grow: 1;
+}
+
+.split-button-end {
   border-left: 1px solid var(--mat-sys-on-primary);
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   min-width: 0px;
   padding-left: 12px;
   padding-right: 12px;
-}
-
-.bpm {
-  width: 50px;
 }

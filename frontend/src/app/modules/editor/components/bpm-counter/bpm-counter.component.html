@@ -1,15 +1,16 @@
 <small class="d-block text-white-50">Track tempo</small>
 <div class="d-flex justify-content-center mt-2">
-  <div class="d-flex align-items-center">
-    <span class="bpm">{{ bpmServerice.bpm$ | async | number : "1.0-0" }}</span>
-  </div>
-  <div>
-    <button mat-flat-button class="split-button" matTooltip="Tab to determine bpm of track." (click)="onTab()">
-      <mat-icon>touch_app</mat-icon>
-      <span>Tab</span>
-    </button>
-    <button mat-flat-button class="split-button-small" matTooltip="Reset bpm counter." (click)="onReset()">
-      <mat-icon class="m-0">restart_alt</mat-icon>
-    </button>
-  </div>
+  <span>{{ bpmServerice.bpm$ | async | number : "1.0-0" }}</span>
+</div>
+<div class="d-flex justify-content-center mt-2">
+  <button mat-flat-button class="split-button-start" matTooltip="Apply tabbed bpm." (click)="onApplyBpm()">
+    <mat-icon class="m-0">check_circle</mat-icon>
+  </button>
+  <button mat-flat-button class="split-button-middle" matTooltip="Tab to determine bpm of track." (click)="onTab()">
+    <mat-icon>touch_app</mat-icon>
+    <span>Tab</span>
+  </button>
+  <button mat-flat-button class="split-button-end" matTooltip="Reset bpm counter." (click)="onReset()">
+    <mat-icon class="m-0">restart_alt</mat-icon>
+  </button>
 </div>

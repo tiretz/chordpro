@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 
 import { IChords } from '../../../core/models/chords.interface';
 import { ApiService } from '../../../core/services/api.service';
+
+import { BpmService } from './bpm.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +16,20 @@ export class EditorService {
   private currentKeyAndChords: [string | undefined, string[] | undefined] = [undefined, undefined];
   public monacoEditor: any | undefined;
 
-  constructor(private readonly apiService: ApiService) {
+  constructor(private readonly apiService: ApiService, private readonly bpmService: BpmService) {
     this.onValueChange = this.onValueChange.bind(this);
+  }
+
+  public async applyBpm(): Promise<void> {
+    const content: string | null | undefined = this.monacoEditor.getValue();
+
+    if (!content) {
+      return;
+    }
+
+    const replacedContent: string = content.replace(/({tempo: )(.*?)(})/g, `$1${(await firstValueFrom(this.bpmService.bpm$)).toFixed(0).toString()}$3`);
+
+    this.monacoEditor.setValue(replacedContent);
   }
 
   private checkKeyChange(content: string): void {

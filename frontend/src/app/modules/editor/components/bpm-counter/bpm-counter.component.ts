@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { BpmService } from '../../services/bpm.service';
+import { EditorService } from '../../services/editor.service';
 
 @Component({
   selector: 'app-bpm-counter',
@@ -14,7 +15,11 @@ import { BpmService } from '../../services/bpm.service';
   styleUrl: './bpm-counter.component.scss',
 })
 export class BpmCounterComponent {
-  constructor(protected readonly bpmServerice: BpmService) {}
+  constructor(protected readonly bpmServerice: BpmService, private readonly editorService: EditorService) {}
+
+  protected async onApplyBpm(): Promise<void> {
+    await this.editorService.applyBpm();
+  }
 
   protected onReset(): void {
     this.bpmServerice.reset();
