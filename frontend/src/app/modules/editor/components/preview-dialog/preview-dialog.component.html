@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>{{ trackTitle }} - {{ trackArtists }}</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content class="mat-typography">
+  <span [innerHTML]="htmlPreview"></span>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close cdkFocusInitial>OK</button>
+</mat-dialog-actions>

@@ -1,12 +1,13 @@
 :host {
   display: block;
+  position: relative;
 }
 
 mat-sidenav-container {
   height: 100%;
 }
 
-#sidenav {
+mat-sidenav {
   display: flex;
   width: 250px;
   text-align: center;
@@ -17,4 +18,11 @@ mat-sidenav-container {
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
+}
+
+.preview-button {
+  bottom: 5%;
+  position: absolute;
+  right: 2.5%;
+  z-index: 1;
 }

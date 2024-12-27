@@ -1,0 +1,30 @@
+:host {
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+::ng-deep h1 {
+  display: none;
+}
+
+::ng-deep h3 {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+::ng-deep table {
+  border-spacing: 0;
+  color: inherit;
+}
+
+::ng-deep td {
+  padding: 3px 0;
+}
+
+::ng-deep .chord:not(:last-child) {
+  padding-right: 10px;
+}
+
+::ng-deep .paragraph {
+  margin-bottom: 1em;
+  white-space: pre;
+}

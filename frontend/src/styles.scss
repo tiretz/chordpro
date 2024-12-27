@@ -19,8 +19,11 @@ html {
 html,
 body {
   height: 100%;
+  --mat-sys-on-background: #fff;
   --mat-sys-on-primary: #fff;
+  --mat-sys-on-primary-container: #fff;
   --mat-sys-primary: #c2185b;
+  --mat-sys-primary-container: #c2185b;
   --mat-sys-on-surface: #fff;
   --mat-sys-on-surface-variant: #fff;
   --mat-sys-surface: #424242;
