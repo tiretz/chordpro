@@ -10,6 +10,10 @@
     <mat-icon class="m-0">arrow_drop_down</mat-icon>
   </button>
   <mat-menu #dropdownMenu="matMenu" xPosition="before">
+    <button mat-menu-item matTooltip="Import chords over text." (click)="onImportChordsOverTextButtonClick()">
+      <mat-icon>lyrics</mat-icon>
+      <span>Import chords over text</span>
+    </button>
     <button mat-menu-item matTooltip="Insert empty chordpro track template." (click)="onInsertEmptyTrackTemplateButtonClick()">
       <mat-icon>text_snippet</mat-icon>
       <span>Empty track template</span>

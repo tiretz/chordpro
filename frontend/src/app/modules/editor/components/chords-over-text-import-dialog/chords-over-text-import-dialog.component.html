@@ -1,0 +1,16 @@
+<h2 mat-dialog-title class="d-flex align-items-center mb-0">
+  <mat-icon>content_paste</mat-icon>
+  <span class="ms-2">Import chords over text</span>
+</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field>
+    <mat-label>Chords over text</mat-label>
+    <textarea #text matInput placeholder="Paste chords over text..."></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close cdkFocusInitial>Cancel</button>
+  <button mat-flat-button [disabled]="!text.value" [mat-dialog-close]="text.value">Import</button>
+</mat-dialog-actions>

@@ -5,7 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 
-import { ChordProParser, HtmlFormatter, HtmlTableFormatter, Song } from 'chordsheetjs';
+import { Song } from 'chordsheetjs';
+
+import { ChordSheetService } from '../../services/chord-sheet.service';
 
 @Component({
   selector: 'app-preview-dialog',
@@ -14,17 +16,12 @@ import { ChordProParser, HtmlFormatter, HtmlTableFormatter, Song } from 'chordsh
   styleUrl: './preview-dialog.component.scss',
 })
 export class PreviewDialogComponent implements OnInit {
-  private chordProParser?: ChordProParser;
+  private readonly chordSheetService: ChordSheetService = inject(ChordSheetService);
   private readonly data = inject(MAT_DIALOG_DATA);
-  private htmlFormatter?: HtmlFormatter;
   protected htmlPreview?: SafeHtml;
   protected trackArtists?: string | null;
   protected trackTitle?: string | null;
-
-  constructor(private readonly sanitizer: DomSanitizer) {
-    this.chordProParser = new ChordProParser();
-    this.htmlFormatter = new HtmlTableFormatter({ evaluate: true, expandChorusDirective: true, normalizeChords: false });
-  }
+  private readonly sanitizer: DomSanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
     if (!this.data.htmlPreview) {
@@ -32,7 +29,7 @@ export class PreviewDialogComponent implements OnInit {
       return;
     }
 
-    const song: Song | undefined = this.chordProParser?.parse(this.data.htmlPreview);
+    const song: Song | undefined = this.chordSheetService.chordProParser?.parse(this.data.htmlPreview);
 
     if (!song) {
       this.reset();
@@ -42,7 +39,7 @@ export class PreviewDialogComponent implements OnInit {
     this.trackTitle = song.title;
     this.trackArtists = Array.isArray(song.artist) ? song.artist.join(', ') : song.artist;
 
-    const songAsHtml: string | undefined = this.htmlFormatter?.format(song);
+    const songAsHtml: string | undefined = this.chordSheetService.htmlFormatter?.format(song);
 
     if (!songAsHtml) {
       this.reset();

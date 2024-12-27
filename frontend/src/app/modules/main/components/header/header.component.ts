@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +9,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { firstValueFrom } from 'rxjs';
 
+import { Song } from 'chordsheetjs';
+
 import { ITrack } from '../../../../core/models/track.interface';
 import { ApiService } from '../../../../core/services/api.service';
 
@@ -16,6 +18,8 @@ import { LoadingOverlayService } from '../../../../shared/components/loading-ove
 
 import { NewDialogComponent } from '../../../editor/components/new-dialog/new-dialog.component';
 import { OverrideDialogComponent, OverrideDialogModel } from '../../../editor/components/override-dialog/override-dialog.component';
+import { ChordsOverTextImportDialogComponent } from '../../../editor/components/chords-over-text-import-dialog/chords-over-text-import-dialog.component';
+import { ChordSheetService } from '../../../editor/services/chord-sheet.service';
 import { BpmService } from '../../../editor/services/bpm.service';
 import { EditorService } from '../../../editor/services/editor.service';
 
@@ -26,7 +30,12 @@ import { EditorService } from '../../../editor/services/editor.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(private readonly dialog: MatDialog, private readonly editorService: EditorService, private readonly bpmService: BpmService, private readonly apiService: ApiService, private readonly loadingOverlayService: LoadingOverlayService) {}
+  private readonly chordSheetService: ChordSheetService = inject(ChordSheetService);
+  private readonly dialog: MatDialog = inject(MatDialog);
+  private readonly editorService: EditorService = inject(EditorService);
+  private readonly bpmService: BpmService = inject(BpmService);
+  private readonly apiService: ApiService = inject(ApiService);
+  private readonly loadingOverlayService: LoadingOverlayService = inject(LoadingOverlayService);
 
   private async cancelOverrideEditorValue(): Promise<boolean> {
     if (this.editorService.monacoEditor.getValue()) {
@@ -49,6 +58,46 @@ export class HeaderComponent {
 
   protected async onDownloadTrackButtonClick(): Promise<void> {
     await this.saveToFile(this.editorService.monacoEditor.getValue(), this.editorService.getDownloadFilename());
+  }
+
+  protected async onImportChordsOverTextButtonClick(): Promise<void> {
+    if (await this.cancelOverrideEditorValue()) {
+      return;
+    }
+
+    this.editorService.reset();
+
+    const dialogRef = this.dialog.open(ChordsOverTextImportDialogComponent, {
+      enterAnimationDuration: '500ms',
+      exitAnimationDuration: '500ms',
+      position: { top: '5%' },
+      width: '65%',
+    });
+
+    dialogRef.afterClosed().subscribe((chordsOverText: string | undefined) => {
+      if (!chordsOverText) {
+        return;
+      }
+
+      this.loadingOverlayService.show('Parsing track ...');
+
+      const song: Song | undefined = this.chordSheetService.chordsOverTextParser?.parse(chordsOverText);
+
+      if (!song) {
+        this.loadingOverlayService.hide();
+        return;
+      }
+
+      const formattedTrack: string | undefined = this.chordSheetService.chordProFormatter?.format(song);
+
+      this.apiService.getTrackTemplate().subscribe({
+        next: (trackTemplate: string) => {
+          this.editorService.monacoEditor.setValue(trackTemplate + '\n' + formattedTrack);
+
+          this.loadingOverlayService.hide();
+        },
+      });
+    });
   }
 
   protected async onInsertEmptyTrackTemplateButtonClick(): Promise<void> {
