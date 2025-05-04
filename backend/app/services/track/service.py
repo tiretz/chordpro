@@ -90,13 +90,13 @@ def search_tracks(spotify: Spotify, title: str | None, artists: list[str] | None
     """
 
     if title and artists:
-        search_query: str = f"""{title.replace(" ", "%20")}%20track:{title.replace(" ", "%20")}{f"%20artist:{",".join(artists)}".replace(" ", "%20")}"""
+        search_query: str = f"""{title.replace(" ", "%2520")}{f"%2520artist%3A{",".join(artists)}".replace(" ", "%2520")}"""
 
     elif title and not artists:
-        search_query: str = f"""{title.replace(" ", "%20")}%20track:{title.replace(" ", "%20")}"""
+        search_query: str = title.replace(" ", "%2520")
 
     elif not title and artists:
-        search_query: str = f"""{",".join(artists).replace(" ", "%20")}%20artist:{",".join(artists).replace(" ", "%20")}"""
+        search_query: str = ",".join(artists).replace(" ", "%2520")
 
     else:
         raise BadRequestException("Invalid search parameters!")

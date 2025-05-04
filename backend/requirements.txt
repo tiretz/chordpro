@@ -1,8 +1,8 @@
 python-dateutil==2.9.0.post0
-fastapi[standard]==0.115.6
+fastapi[standard]==0.115.12
 langdetect==1.0.9
-lyricsgenius==3.2.0
+lyricsgenius==3.6.2
 musthe==1.0.0
 pydantic-settings==2.7.0
-spotipy==2.24.0
-uvicorn==0.34.0
+spotipy==2.25.1
+uvicorn==0.34.2
